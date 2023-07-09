@@ -9,10 +9,10 @@ import math
 
 def event_list_view(request):
     
-    # Get the country code from the request parameter
+    
     country = request.GET.get('country')
     
-    # Check if data exists in the database and is not more than 6 hours old
+    
     try:
         event = Event.objects.get(country=country)
         if timezone.now() - event.last_updated <= timezone.timedelta(hours=6):
@@ -68,7 +68,7 @@ def weather_view(request):
         lat = event.location[1]
         lon = event.location[0]
         
-        # Make the API request to OpenWeatherMap
+        
         api_key = 'f22892654725839a44ff6db985f0b151'
         url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=part&appid={api_key}"
         response = requests.get(url)
@@ -79,7 +79,7 @@ def weather_view(request):
             temperature = weather_data['current']['temp']
             humidity = weather_data['current']['humidity']
             
-            # Update the event with the new weather data
+            
             event.temperature = temperature
             event.humidity = humidity
             event.save()
